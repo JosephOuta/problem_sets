@@ -1,5 +1,5 @@
 ---
-title: "Reproducibility Report: Group B Choice 3"
+title: "Joseph Outa, Reproducibility Report: Group B Choice 3"
 output:
   html_document:
     toc: yes
@@ -56,6 +56,34 @@ d <- read_excel(data_path, sheet=3)
 # Step 3: Tidy data
 
 ```{r}
+head(d)
+length(d)
+filterd_d <- select(d, -item) 
+colnames(filterd_d)
+names(filterd_d)[4] <- "Agreement"
+
+#summarize 
+sorted_d <- filterd_d %>%
+group_by(participant, group, subscale)%>%
+  summarise(Agreement=mean(Agreement))
+sorted_d
+length(sorted_d$participant) #check data frame length
+
+#make data wide
+tpf_long <- sorted_d  %>%
+  pivot_wider(names_from = "subscale",
+              values_from = "Agreement")
+
+#check sample size
+length(tpf_long$participant) #equals 80 that's good
+
+#re-sort by condition
+tpf_long_2 <- arrange(tpf_long, group)
+names(tpf_long_2)[2] <- "Country"
+names(tpf_long_2)[3] <- "Future"
+names(tpf_long_2)[4] <- "Past"
+
+tpf_long_2
 
 ```
 
@@ -64,6 +92,11 @@ d <- read_excel(data_path, sheet=3)
 ## Pre-processing
 
 ```{r}
+#compute summary stats
+tpf_summ <- tpf_long_2 %>%
+  group_by(Country) %>%
+  summarise(FutureMean = mean(Future), PastMean = mean(Past))
+tpf_summ 
 
 ```
 
@@ -102,12 +135,12 @@ Try to recreate Figure 2 (fig2.png, also included in the same folder as this Rmd
 
 Were you able to reproduce the results you attempted to reproduce? If not, what part(s) were you unable to reproduce?
 
-> ANSWER HERE
-
+> No, was unable to complete it in 3 hours It was a steep learning curve to figure out the code for tidying the data. I could have kept going but it would take me longer than I have time for. I got stuck at the pre-processing stage. I couldn't generate a table with summary statistics. I think its because I couldn't group the table with the 'participant' column still there and I couldn't figure out a way around it. 
+ 
 How difficult was it to reproduce your results? 
 
-> ANSWER HERE
+> I think the hardest part is the data wrangling.
 
 What aspects made it difficult? What aspects made it easy?
 
-> ANSWER HERE
+> Since I am a beginner I had to look up things quite a lot and it took a lot of time. I am also often not sure if I'm doing the right thing. I definitely need to practice this more when I have more time. 

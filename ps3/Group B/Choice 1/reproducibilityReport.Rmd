@@ -69,7 +69,10 @@ Each row is an observation. The data is already in tidy format.
 ### Pre-processing
 
 ```{r}
-
+head(data)
+colnames(data)
+summary(data)
+length(data)
 ```
 
 ### Descriptive statistics
