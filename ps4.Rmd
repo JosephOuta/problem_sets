@@ -19,6 +19,8 @@ Load data from Frank, Vul, Saxe (2011, Infancy), a study in which we measured in
 
 ```{r}
 library("tidyverse")
+knitr::opts_knit$set(root.dir = '/Users/JosephOuta/Desktop/GitHub/problem_sets')
+setwd("///Users/JosephOuta/Desktop/GitHub/problem_sets")
 fvs <- read_csv("data/FVS2011-hands.csv")
 ```
 
@@ -31,7 +33,6 @@ length(fvs$condition)
 str(fvs)
 
 fvs_cond2 <- filter(fvs, condition=="Faces_Plus") 
-hist(fvs_cond2$age)
 
 ggplot(fvs_cond2, aes(x=age)) + 
   geom_histogram(binwidth=5, boundary=0, color="black", fill="white") +
